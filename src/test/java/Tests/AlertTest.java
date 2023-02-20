@@ -1,5 +1,8 @@
 package Tests;
 
+import HelpMethod.AlertMethods;
+import HelpMethod.ElementMethod;
+import HelpMethod.PageMethods;
 import ShareData.ShareData;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -13,52 +16,51 @@ import java.util.List;
 
 public class AlertTest extends ShareData {
 
-    public WebDriver driver;
-
     @Test
+
     public void MetodaTest() {
+        ElementMethod elementMethod = new ElementMethod(getDriver());
+        PageMethods pageMethods = new PageMethods(getDriver());
+        AlertMethods alertMethods = new AlertMethods(getDriver());
 
+        WebElement SkipSignIn = getDriver().findElement(By.id("btn2"));
+        elementMethod.ClickElement(SkipSignIn);
 
-        WebElement SkipSignIn = driver.findElement(By.id("btn2"));
-        SkipSignIn.click();
+        WebElement SwitchTo = getDriver().findElement(By.xpath("//a[text()='SwitchTo']"));
 
-        WebElement SwitchTo = driver.findElement(By.xpath("//a[text()='SwitchTo']"));
-        //Mergem cu mouse-ul pe un anumit element
-        Actions actions = new Actions(driver);
-        actions.moveToElement(SwitchTo).perform();
+        // mergem cu mouse-ul pe un anumit element
+        elementMethod.MoveToElement(SwitchTo);
 
-        WebElement AlertElement = driver.findElement(By.xpath("//a[text()='Alerts']"));
-        AlertElement.click();
+        WebElement AlertElement = getDriver().findElement(By.xpath("//a[text()='Alerts']"));
+        elementMethod.ClickElement(AlertElement);
 
-        //Navigam catre un URL
-        driver.navigate().to("https://demo.automationtesting.in/Alerts.html");
+        //navigam catre un url
+        pageMethods.NavigateToPage("https://demo.automationtesting.in/Alerts.html");
 
-        List<WebElement> AlertOptions = driver.findElements(By.cssSelector(".nav-stacked>li>a"));
-        AlertOptions.get(0).click();
+        List<WebElement> AlertOptions = getDriver().findElements(By.cssSelector(".nav-stacked>li>a"));
+        elementMethod.ClickElement(AlertOptions.get(0));
 
-        WebElement AlertOk = driver.findElement(By.cssSelector("#OKTab>button"));
-        AlertOk.click();
+        WebElement AlertOk = getDriver().findElement(By.cssSelector("#OKTab>button"));
+        elementMethod.ClickElement(AlertOk);
 
-        //Interactionam cu o alerta
-        Alert FirstAlert = driver.switchTo().alert();
-        FirstAlert.accept();
+        //interactionam cu o alerta
 
-        AlertOptions.get(1).click();
+        alertMethods.AcceptAlert();
 
-        WebElement AlertOkCancel = driver.findElement(By.cssSelector("#CancelTab>button"));
-        AlertOkCancel.click();
+        elementMethod.ClickElement(AlertOptions.get(1));
 
-        Alert SecondAlert = driver.switchTo().alert();
-        SecondAlert.dismiss();
+        WebElement AlertOkCancel = getDriver().findElement(By.cssSelector("#CancelTab>button"));
+        elementMethod.ClickElement(AlertOkCancel);
 
-        AlertOptions.get(2).click();
+        alertMethods.DismissAlert();
 
-        WebElement AlertText = driver.findElement(By.cssSelector("#Textbox>button"));
-        AlertText.click();
+        elementMethod.ClickElement(AlertOptions.get(2));
 
-        Alert ThirdAlert = driver.switchTo().alert();
-        ThirdAlert.sendKeys("Bau");
-        ThirdAlert.accept();
+        WebElement AlertText = getDriver().findElement(By.cssSelector("#Textbox>button"));
+        elementMethod.ClickElement(AlertText);
+
+        alertMethods.FillAlert("test", true);
+
 
     }
 }

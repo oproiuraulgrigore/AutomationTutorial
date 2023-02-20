@@ -12,66 +12,62 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WindowTest extends ShareData {
-
-    public WebDriver driver;
-
     @Test
-    public void MetodaTest(){
 
+    public void MetodaTest() throws InterruptedException {
 
-        WebElement SkipSignIn = driver.findElement(By.id("btn2"));
+        WebElement SkipSignIn = getDriver().findElement(By.id("btn2"));
         SkipSignIn.click();
 
-        WebElement SwitchTo = driver.findElement(By.xpath("//a[text()='SwitchTo']"));
-        //Mergem cu mouse-ul pe un anumit element
-        Actions actions = new Actions(driver);
+        WebElement SwitchTo = getDriver().findElement(By.xpath("//a[text()='SwitchTo']"));
+
+        Actions actions = new Actions(getDriver());
         actions.moveToElement(SwitchTo).perform();
 
-        WebElement WindowElement = driver.findElement(By.xpath("//a[text()='Windows']"));
+        WebElement WindowElement = getDriver().findElement(By.xpath("//a[text()='Windows']"));
         WindowElement.click();
-        driver.navigate().to("https://demo.automationtesting.in/Windows.html");
+        getDriver().navigate().to("https://demo.automationtesting.in/Windows.html");
 
-        List<WebElement> WindowOptions = driver.findElements(By.cssSelector(".nav-stacked>li>a"));
+        List<WebElement> WindowOptions = getDriver().findElements(By.cssSelector(".nav-stacked>li>a"));
         WindowOptions.get(0).click();
 
-        WebElement TabButton = driver.findElement(By.cssSelector("#Tabbed>a>button"));
-        TabButton.click();
+        WebElement TabButon = getDriver().findElement(By.cssSelector("#Tabbed>a>button"));
+        TabButon.click();
 
-        //Identificam multimea de taburi/pagini
+        //identificam multimea de tab-uri/windowsuri
 
-        List<String>Tabs = new ArrayList<>(driver.getWindowHandles());
+        List<String> Tabs = new ArrayList<>(getDriver().getWindowHandles());
 
-        //Ne mutam cu focusul pe un tab specific
+        //ne mutam cu focusul pe un tab specific
 
-        driver.switchTo().window(Tabs.get(1));
+        getDriver().switchTo().window(Tabs.get(1));
 
-        //Inchidem Tab-ul curent
-        driver.close();
-        driver.switchTo().window(Tabs.get(0));
+        //inchidem tabul curent
+
+        getDriver().close();
+        getDriver().switchTo().window(Tabs.get(0));
 
         WindowOptions.get(1).click();
-        WebElement WindowButton = driver.findElement(By.cssSelector("#Seperate>button"));
+        WebElement WindowButton = getDriver().findElement(By.cssSelector("#Seperate>button"));
         WindowButton.click();
 
-        List<String>Window = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(Window.get(1));
-        driver.close();
-        driver.switchTo().window(Window.get(0));
-
+        List<String> Windows = new ArrayList<>(getDriver().getWindowHandles());
+        //ne mutam cu focusul pe un window specific
+        getDriver().switchTo().window(Windows.get(1));
+        getDriver().close();
+        getDriver().switchTo().window(Windows.get(0));
 
         WindowOptions.get(2).click();
-        WebElement MultipleButton = driver.findElement(By.cssSelector("#Multiple>button"));
+
+        WebElement MultipleButton = getDriver().findElement(By.cssSelector("#Multiple>button"));
         MultipleButton.click();
-        List<String>Multiple = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(Multiple.get(2));
-        driver.close();
-        driver.switchTo().window(Multiple.get(1));
-        driver.close();
-        driver.switchTo().window(Multiple.get(0));
 
-
-
-
+        List<String> Multiple = new ArrayList<>(getDriver().getWindowHandles());
+        getDriver().switchTo().window(Multiple.get(2));
+        getDriver().close();
+        getDriver().switchTo().window(Multiple.get(1));
+        getDriver().close();
+        getDriver().switchTo().window(Multiple.get(0));
 
 
     }

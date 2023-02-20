@@ -5,39 +5,44 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
+import java.time.Duration;
+
 public class ShareData {
 
     private WebDriver driver;
 
-    //Folosim adnotarea de @before din TestNG
-
-
     public WebDriver getDriver() {
+
         return driver;
     }
+    //folosim adnotarea de @before din TestNG
 
     @BeforeMethod
     public void Setup(){
 
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/Driver/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://demo.automationtesting.in/Index.html");
 
+        //Wait implicit
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
-    //Folosim @After ca sa inchidem
+    //folosim @after
 
     @AfterMethod
-    public  void Clear(){
-        // Inchidem un browser se face cu driver.quit
 
+    public void Clear(){
+
+        //inchidem un browser
         driver.quit();
+        //quit = inchide browserul cu oricate tab-uri deschise
+        //close = inchide tab-ul curent
 
-        // Driver.quit inchide browserul cu oricate tab-uri deschide
-        // Close inchide doar tab-ul curent
 
     }
+
 
 
 
